@@ -1,0 +1,120 @@
+/* Global body styling */
+body {
+  background: #f4f4f7;
+  color: #1d1d1f;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, sans-serif;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  margin: 0;
+  overflow: hidden;
+  position: relative;
+}
+
+/* Container styling */
+.container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  padding: 20px;
+  width: 100%;
+  max-width: 900px;
+  position: relative;
+}
+
+/* Quote styling */
+.quote {
+  font-size: 36px;
+  font-weight: 600;
+  color: #1d1d1f;
+  line-height: 1.4;
+  text-align: center;
+  max-width: 90%;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+  margin: 0 0 40px 0;
+  letter-spacing: -0.5px;
+  padding: 0 20px;
+}
+
+/* Apple-style button */
+.apple-style-btn {
+  position: fixed;
+  bottom: 40px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: #ffffff;
+  border: none;
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+  box-shadow: 
+    0 4px 8px rgba(0, 0, 0, 0.1),
+    0 2px 4px rgba(0, 0, 0, 0.08);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  backdrop-filter: blur(10px);
+  background-color: rgba(255, 255, 255, 0.8);
+}
+
+.apple-style-btn:hover {
+  transform: translateX(-50%) scale(1.05);
+  box-shadow: 
+    0 6px 12px rgba(0, 0, 0, 0.12),
+    0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.apple-style-btn:active {
+  transform: translateX(-50%) scale(0.95);
+  background-color: rgba(255, 255, 255, 0.9);
+}
+
+.apple-icon {
+  width: 24px;
+  height: 24px;
+  color: #1d1d1f;
+  transition: transform 0.2s ease;
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+  .quote {
+    font-size: 28px;
+    margin-bottom: 30px;
+  }
+  
+  .apple-style-btn {
+    width: 56px;
+    height: 56px;
+    bottom: 30px;
+  }
+  
+  .apple-icon {
+    width: 22px;
+    height: 22px;
+  }
+}
+
+@media (max-width: 480px) {
+  .quote {
+    font-size: 24px;
+    margin-bottom: 25px;
+  }
+  
+  .apple-style-btn {
+    width: 52px;
+    height: 52px;
+    bottom: 25px;
+  }
+  
+  .apple-icon {
+    width: 20px;
+    height: 20px;
+  }
+}

@@ -5,10 +5,11 @@ import "./styles.css";
 const App = () => {
   const [quotes, setQuotes] = useState([]);
   const [remainingQuotes, setRemainingQuotes] = useState([]);
-  const [quote, setQuote] = useState("");
+  const [quote, setQuote] = useState(null); // Changed initial state to null to ensure proper loading state
   const [isChanging, setIsChanging] = useState(false);
-  const [loading, setLoading] = useState(true);  // Add loading state
+  const [loading, setLoading] = useState(true);
 
+  // Shuffle function for randomizing quotes
   const shuffleArray = (array) => {
     const newArray = [...array];
     for (let i = newArray.length - 1; i > 0; i--) {
@@ -18,25 +19,39 @@ const App = () => {
     return newArray;
   };
 
+  // Fetch quotes from the file
   useEffect(() => {
     fetch("/quotes.txt")
-      .then((response) => response.text())
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error("Network response was not ok");
+        }
+        return response.text();
+      })
       .then((data) => {
         const loadedQuotes = data
           .split("\n")
           .map((line) => line.trim())
           .filter((line) => line);
 
-        if (loadedQuotes.length === 0) return;
+        if (loadedQuotes.length === 0) {
+          console.error("No quotes found in the file");
+          return;
+        }
 
         const shuffledQuotes = shuffleArray(loadedQuotes);
         setQuotes(shuffledQuotes);
         setRemainingQuotes(shuffledQuotes.slice(1));
-        setQuote(shuffledQuotes[0]);
-        setLoading(false);  // Set loading to false when quotes are loaded
+        setQuote(shuffledQuotes[0]); // Initial quote is set here
+        setLoading(false);
+      })
+      .catch((error) => {
+        console.error("Error fetching quotes:", error);
+        setLoading(false);
       });
   }, []);
 
+  // Function to get the next quote
   const getNextQuote = () => {
     if (isChanging) return;
     setIsChanging(true);
@@ -46,8 +61,7 @@ const App = () => {
 
       if (newRemaining.length === 0) {
         newRemaining = shuffleArray([...quotes]);
-
-        // Ensure the new quote is different from the current one
+        // Prevent repeating the current quote immediately
         if (newRemaining[0] === quote) {
           const first = newRemaining.shift();
           newRemaining.push(first);
@@ -60,29 +74,32 @@ const App = () => {
     });
   };
 
+  // Framer Motion variants for a smooth fade
   const quoteVariants = {
-    initial: { y: -100, opacity: 0 },
-    animate: { y: 0, opacity: 1 },
-    exit: { y: 100, opacity: 0 },
+    initial: { opacity: 0 },
+    animate: { opacity: 1 },
+    exit: { opacity: 0 },
   };
 
   return (
     <div className="container">
       {loading ? (
-        <p>Loading...</p>  // Display loading message
+        <p>Loading...</p>
       ) : (
         <AnimatePresence mode="wait" onExitComplete={() => setIsChanging(false)}>
-          <motion.div
-            key={quote}
-            className="quote"
-            variants={quoteVariants}
-            initial="initial"
-            animate="animate"
-            exit="exit"
-            transition={{ type: "spring", stiffness: 120, damping: 20, mass: 1 }}
-          >
-            <motion.span className="animated-quote">{`“${quote}”`}</motion.span>
-          </motion.div>
+          {quote && (
+            <motion.div
+              key={quote}
+              className="quote"
+              variants={quoteVariants}
+              initial="initial"
+              animate="animate"
+              exit="exit"
+              transition={{ duration: 0.6, ease: "easeInOut" }}
+            >
+              {`“${quote}”`}
+            </motion.div>
+          )}
         </AnimatePresence>
       )}
 

@@ -23,72 +23,81 @@ body {
   width: 100%;
   max-width: 900px;
   position: relative;
+  box-sizing: border-box;
+  overflow: hidden;
 }
 
-/* Quote styling (mobile-first) */
+/* Quote styling */
 .quote {
-  font-size: 24px;
+  font-size: 36px;
   font-weight: 600;
   color: #1d1d1f;
   line-height: 1.4;
   text-align: center;
-  max-width: 90%;
+  max-width: 100%;
   word-wrap: break-word;
   overflow-wrap: break-word;
-  margin: 0 0 25px;
+  margin: 0 auto;
   letter-spacing: -0.5px;
   padding: 0 20px;
+  box-sizing: border-box;
+  /* Removed default opacity and transition properties to let Framer Motion handle animations */
 }
 
-/* Apple-style button (mobile-first) */
+/* Apple-style button */
 .apple-style-btn {
   position: fixed;
-  bottom: 25px;
+  bottom: 40px;
   left: 50%;
   transform: translateX(-50%);
-  background: rgba(255, 255, 255, 0.8);
+  background: #007aff;
   border: none;
-  width: 52px;
-  height: 52px;
-  border-radius: 50%;
+  width: 180px;
+  height: 50px;
+  border-radius: 25px;
   cursor: pointer;
   transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1),
-              0 2px 4px rgba(0, 0, 0, 0.08);
+  box-shadow: 
+    0 4px 8px rgba(0, 0, 0, 0.1),
+    0 2px 4px rgba(0, 0, 0, 0.08);
   display: flex;
   align-items: center;
   justify-content: center;
   backdrop-filter: blur(10px);
+  background-color: rgba(0, 122, 255, 0.8);
 }
 
 .apple-style-btn:hover {
   transform: translateX(-50%) scale(1.05);
-  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.12),
-              0 4px 8px rgba(0, 0, 0, 0.1);
+  box-shadow: 
+    0 6px 12px rgba(0, 0, 0, 0.12),
+    0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
 .apple-style-btn:active {
   transform: translateX(-50%) scale(0.95);
-  background-color: rgba(255, 255, 255, 0.9);
+  background-color: rgba(0, 122, 255, 0.9);
 }
 
 .apple-icon {
-  width: 20px;
-  height: 20px;
-  color: #1d1d1f;
+  width: 24px;
+  height: 24px;
+  color: #ffffff;
   transition: transform 0.2s ease;
 }
 
-/* Larger devices */
-@media (min-width: 481px) {
+/* Responsive design */
+@media (max-width: 768px) {
   .quote {
     font-size: 28px;
     margin-bottom: 30px;
+    padding: 0 15px;
+    max-width: 90%;
   }
   
   .apple-style-btn {
-    width: 56px;
-    height: 56px;
+    width: 150px;
+    height: 45px;
     bottom: 30px;
   }
   
@@ -98,20 +107,22 @@ body {
   }
 }
 
-@media (min-width: 769px) {
+@media (max-width: 480px) {
   .quote {
-    font-size: 36px;
-    margin-bottom: 40px;
+    font-size: 24px;
+    margin-bottom: 25px;
+    padding: 0 10px;
+    max-width: 95%;
   }
   
   .apple-style-btn {
-    width: 60px;
-    height: 60px;
-    bottom: 40px;
+    width: 120px;
+    height: 45px;
+    bottom: 25px;
   }
   
   .apple-icon {
-    width: 24px;
-    height: 24px;
+    width: 20px;
+    height: 20px;
   }
 }

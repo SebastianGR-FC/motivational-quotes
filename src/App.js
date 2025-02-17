@@ -4,10 +4,10 @@ import "./styles.css";
 
 const App = () => {
   const [quotes, setQuotes] = useState([]);
-  // eslint-disable-next-line
   const [remainingQuotes, setRemainingQuotes] = useState([]);
   const [quote, setQuote] = useState("");
   const [isChanging, setIsChanging] = useState(false);
+  const [loading, setLoading] = useState(true);  // Add loading state
 
   const shuffleArray = (array) => {
     const newArray = [...array];
@@ -33,6 +33,7 @@ const App = () => {
         setQuotes(shuffledQuotes);
         setRemainingQuotes(shuffledQuotes.slice(1));
         setQuote(shuffledQuotes[0]);
+        setLoading(false);  // Set loading to false when quotes are loaded
       });
   }, []);
 
@@ -67,19 +68,24 @@ const App = () => {
 
   return (
     <div className="container">
-      <AnimatePresence mode="wait" onExitComplete={() => setIsChanging(false)}>
-        <motion.div
-          key={quote}
-          className="quote"
-          variants={quoteVariants}
-          initial="initial"
-          animate="animate"
-          exit="exit"
-          transition={{ type: "spring", stiffness: 120, damping: 20, mass: 1 }}
-        >
-          <motion.span className="animated-quote">{`“${quote}”`}</motion.span>
-        </motion.div>
-      </AnimatePresence>
+      {loading ? (
+        <p>Loading...</p>  // Display loading message
+      ) : (
+        <AnimatePresence mode="wait" onExitComplete={() => setIsChanging(false)}>
+          <motion.div
+            key={quote}
+            className="quote"
+            variants={quoteVariants}
+            initial="initial"
+            animate="animate"
+            exit="exit"
+            transition={{ type: "spring", stiffness: 120, damping: 20, mass: 1 }}
+          >
+            <motion.span className="animated-quote">{`“${quote}”`}</motion.span>
+          </motion.div>
+        </AnimatePresence>
+      )}
+
       <button
         className="apple-style-btn"
         onClick={getNextQuote}

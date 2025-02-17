@@ -10,7 +10,6 @@ body {
   margin: 0;
   overflow: hidden;
   position: relative;
-  padding: 0 10px; /* Added padding for better mobile view */
 }
 
 /* Container styling */
@@ -39,7 +38,6 @@ body {
   margin: 0 0 40px 0;
   letter-spacing: -0.5px;
   padding: 0 20px;
-  box-sizing: border-box; /* Added for better padding behavior on mobile */
 }
 
 /* Apple-style button */
@@ -89,15 +87,14 @@ body {
   .quote {
     font-size: 28px;
     margin-bottom: 30px;
-    padding: 0 15px; /* Added padding to ensure quote looks well on small screens */
   }
-
+  
   .apple-style-btn {
     width: 56px;
     height: 56px;
     bottom: 30px;
   }
-
+  
   .apple-icon {
     width: 22px;
     height: 22px;
@@ -105,43 +102,19 @@ body {
 }
 
 @media (max-width: 480px) {
-  body {
-    padding: 0 20px; /* Added padding for very small screens */
-  }
-
   .quote {
     font-size: 24px;
     margin-bottom: 25px;
-    padding: 0 10px; /* Reduced padding for better fit */
   }
-
+  
   .apple-style-btn {
     width: 52px;
     height: 52px;
     bottom: 25px;
   }
-
+  
   .apple-icon {
     width: 20px;
     height: 20px;
-  }
-}
-
-@media (max-width: 375px) {
-  .quote {
-    font-size: 22px; /* Slightly smaller font for very small screens */
-    margin-bottom: 20px;
-    padding: 0 10px;
-  }
-
-  .apple-style-btn {
-    width: 50px;
-    height: 50px;
-    bottom: 20px;
-  }
-
-  .apple-icon {
-    width: 18px;
-    height: 18px;
   }
 }

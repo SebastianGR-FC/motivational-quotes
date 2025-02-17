@@ -84,7 +84,7 @@ const App = () => {
   return (
     <div className="container">
       {loading ? (
-        <p>Loading...</p>
+        <p></p>
       ) : (
         <AnimatePresence mode="wait" onExitComplete={() => setIsChanging(false)}>
           {quote && (

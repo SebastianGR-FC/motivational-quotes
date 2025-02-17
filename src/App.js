@@ -4,6 +4,7 @@ import "./styles.css";
 
 const App = () => {
   const [quotes, setQuotes] = useState([]);
+  // eslint-disable-next-line
   const [remainingQuotes, setRemainingQuotes] = useState([]);
   const [quote, setQuote] = useState("");
   const [isChanging, setIsChanging] = useState(false);
@@ -28,47 +29,40 @@ const App = () => {
 
         if (loadedQuotes.length === 0) return;
 
-        const initialShuffle = shuffleArray(loadedQuotes);
-        setQuotes(initialShuffle);
-        setRemainingQuotes(initialShuffle.slice(1));
-        setQuote(initialShuffle[0]);
+        const shuffledQuotes = shuffleArray(loadedQuotes);
+        setQuotes(shuffledQuotes);
+        setRemainingQuotes(shuffledQuotes.slice(1));
+        setQuote(shuffledQuotes[0]);
       });
   }, []);
 
   const getNextQuote = () => {
     if (isChanging) return;
-
     setIsChanging(true);
 
     setRemainingQuotes((prev) => {
       let newRemaining = [...prev];
-      
+
       if (newRemaining.length === 0) {
         newRemaining = shuffleArray([...quotes]);
-        
-        // Ensure next quote is different from current
+
+        // Ensure the new quote is different from the current one
         if (newRemaining[0] === quote) {
           const first = newRemaining.shift();
           newRemaining.push(first);
         }
       }
 
-      const nextQuote = newRemaining[0] || quote;
+      const nextQuote = newRemaining.shift();
       setQuote(nextQuote);
-      return newRemaining.slice(1);
+      return newRemaining;
     });
   };
 
-  const wordAnimation = {
+  const quoteVariants = {
     initial: { y: -100, opacity: 0 },
     animate: { y: 0, opacity: 1 },
     exit: { y: 100, opacity: 0 },
-    transition: {
-      type: "spring",
-      stiffness: 120,
-      damping: 20,
-      mass: 1,
-    },
   };
 
   return (
@@ -77,7 +71,11 @@ const App = () => {
         <motion.div
           key={quote}
           className="quote"
-          {...wordAnimation}
+          variants={quoteVariants}
+          initial="initial"
+          animate="animate"
+          exit="exit"
+          transition={{ type: "spring", stiffness: 120, damping: 20, mass: 1 }}
         >
           <motion.span className="animated-quote">{`“${quote}”`}</motion.span>
         </motion.div>
@@ -93,8 +91,8 @@ const App = () => {
           fill="currentColor"
           className="apple-icon"
         >
-          <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8z"/>
-          <path d="M9.29 15.88L13.17 12 9.29 8.12c-.39-.39-.39-1.02 0-1.41.39-.39 1.02-.39 1.41 0l4.59 4.59c.39.39.39 1.02 0 1.41L10.7 17.29c-.39.39-1.02.39-1.41 0-.39-.39-.39-1.02 0-1.41z"/>
+          <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8z" />
+          <path d="M9.29 15.88L13.17 12 9.29 8.12c-.39-.39-.39-1.02 0-1.41.39-.39 1.02-.39 1.41 0l4.59 4.59c.39.39.39 1.02 0 1.41L10.7 17.29c-.39.39-1.02.39-1.41 0-.39-.39-.39-1.02 0-1.41z" />
         </svg>
       </button>
     </div>
